@@ -33,7 +33,8 @@ parts:
     # override pull to read VERSION because working dir is root of source repo
     override-pull: |
       craftctl default
-      craftctl set version="$(cat VERSION)"
+      TAG=$(git describe --tags)
+      craftctl set version="${TAG#v}"
   scripts:
     plugin: dump
     source: snap/local
