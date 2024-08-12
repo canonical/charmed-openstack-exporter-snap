@@ -1,6 +1,8 @@
 name: charmed-openstack-exporter
 base: core22
 summary: OpenStack Exporter for Prometheus
+license: MIT
+contact: Bootstack Charmers <bootstack-charmers@lists.canonical.com>
 description: |
   The OpenStack exporter, exports Prometheus metrics from a running OpenStack
   cloud for consumption by prometheus.
