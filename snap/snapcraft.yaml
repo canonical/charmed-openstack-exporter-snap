@@ -110,6 +110,8 @@ description: |
   Upstream openstack-exporter snap documentation\
   https://github.com/openstack-exporter/openstack-exporter/blob/main/snap/README.md
 
+source-code: https://github.com/canonical/charmed-openstack-exporter-snap
+issues: https://github.com/canonical/charmed-openstack-exporter-snap/issues
 adopt-info: openstack-exporter
 confinement: strict
 grade: stable
