@@ -4,8 +4,112 @@ summary: OpenStack Exporter for Prometheus
 license: MIT
 contact: solutions-engineering@lists.canonical.com
 description: |
-  The OpenStack exporter, exports Prometheus metrics from a running OpenStack
-  cloud for consumption by prometheus.
+  This snap uses openstack-exporter to provide OpenStack cloud metrics via Prometheus.
+  Grafana dashboards can then be used to visualize the exported metrics, see for example:\
+  https://grafana.com/grafana/dashboards/9701-openstack-dashboard/
+
+  **How-To**
+  ---
+
+  **How to install the snap:**
+
+     sudo snap install charmed-openstack-exporter
+
+     # To allow the snap to read from the /etc/openstack/, you may need to manually add the connection:
+     sudo snap connect charmed-openstack-exporter:etc-openstack
+
+  **How to configure the service:**
+
+  The openstack-exporter service is disabled by default and needs to be configured before the startup.\
+  For example:
+
+     # Set the cloud and os-client-config options
+     sudo snap set charmed-openstack-exporter cloud=mycloud os-client-config=/etc/openstack/clouds.yaml
+
+     # Start the exporter service
+     sudo snap start charmed-openstack-exporter
+
+     # View the logs
+     sudo snap logs charmed-openstack-exporter
+
+  **How to query the metrics:**
+
+  By default the openstack-exporter services serves on port localhost:9180 at the /metrics URL:\
+
+     curl -s http://localhost:9180/metrics
+
+  **How to configure boolean options:**
+
+     # Turn on the option
+     sudo snap set charmed-openstack-exporter multi-cloud=true
+
+     # Turn off the option
+     sudo snap set charmed-openstack-exporter multi-cloud=false
+     # or
+     sudo snap unset charmed-openstack-exporter multi-cloud
+
+  **How to configure options with a value:**
+
+     # Set a value
+     sudo snap set charmed-openstack-exporter cloud=openstack
+
+     # Revert to default
+     sudo snap set charmed-openstack-exporter cloud=
+     sudo snap unset charmed-openstack-exporter cloud
+
+  **How to get all the available options:**
+
+     snap get -d charmed-openstack-exporter
+
+  **Reference**
+  ---
+
+  Available boolean configuration options:
+
+  - `collect-metric-time`
+  - `disable-cinder-agent-uuid`
+  - `disable-deprecated-metrics`
+  - `disable-service.baremetal`
+  - `disable-service.compute`
+  - `disable-service.container-infra`
+  - `disable-service.database`
+  - `disable-service.dns`
+  - `disable-service.gnocchi`
+  - `disable-service.identity`
+  - `disable-service.image`
+  - `disable-service.load-balancer`
+  - `disable-service.network`
+  - `disable-service.object-store`
+  - `disable-service.orchestration`
+  - `disable-service.placement`
+  - `disable-service.volume`
+  - `disable-slow-metrics`
+  - `multi-cloud`
+
+  Available configuration options with a value:
+
+  - `cloud`
+  - `domain-id`
+  - `endpoint-type`
+  - `log.format`
+  - `log.level`
+  - `os-client-config`
+  - `prefix`
+  - `web.listen-address`
+  - `web.telemetry-path`
+
+  The `disable-metrics` option is similar to other options with a value, but it takes multiple values, separated by whitespace.
+
+  For more information on the available options, see `charmed-openstack-exporter.openstack-exporter --help`.
+
+  **Links**
+  ---
+  Upstream openstack-exporter repository\
+  https://github.com/openstack-exporter/openstack-exporter
+
+  Upstream openstack-exporter snap documentation\
+  https://github.com/openstack-exporter/openstack-exporter/blob/main/snap/README.md
+
 adopt-info: openstack-exporter
 confinement: strict
 grade: stable
