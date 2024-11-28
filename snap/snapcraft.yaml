@@ -57,4 +57,4 @@ plugs:
   etc-openstack:
     interface: system-files
     read:
-    - /etc/openstack
+      - /etc/openstack
