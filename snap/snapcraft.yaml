@@ -34,7 +34,7 @@ description: |
 
   **How to query the metrics:**
 
-  By default the openstack-exporter services serves on port localhost:9180 at the /metrics URL:\
+  By default the openstack-exporter service serves on localhost:9180/metrics:\
 
      curl -s http://localhost:9180/metrics
 
