@@ -102,6 +102,13 @@ description: |
 
   For more information on the available options, see `charmed-openstack-exporter.openstack-exporter --help`.
 
+  **Cryptography**
+  ---
+
+  A developer can use a helper script (`sync_upstream.sh`) to update the folders containing hooks and local scripts from upstream. 
+  The script uses the `git clone` command over **HTTPS** to fetch the latest files and update the snap folder content accordingly. 
+  See the links at the bottom of the page for more details.
+
   **Links**
   ---
   Upstream openstack-exporter repository\
@@ -109,6 +116,9 @@ description: |
 
   Upstream openstack-exporter snap documentation\
   https://github.com/openstack-exporter/openstack-exporter/blob/main/snap/README.md
+
+  Git clone documentation\
+  https://git-scm.com/docs/git-clone
 
 source-code: https://github.com/canonical/charmed-openstack-exporter-snap
 issues: https://github.com/canonical/charmed-openstack-exporter-snap/issues
