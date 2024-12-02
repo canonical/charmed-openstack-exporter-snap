@@ -16,7 +16,7 @@ def install_charmed_openstack_exporter_snap():
         shell=True,
     )
 
-    # Create the directory if it doesn't exist and create the file
+    # Create the directory if it doesn't exist and create the test config files
     subprocess.check_call(["sudo", "mkdir", "-p", config_dir_path])
     subprocess.check_call(["sudo", "touch", config_file_path])
     subprocess.check_call(["sudo", "touch", config_test_file_path])

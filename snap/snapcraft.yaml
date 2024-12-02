@@ -1,5 +1,5 @@
 name: charmed-openstack-exporter
-base: core24
+base: core22
 summary: OpenStack Exporter for Prometheus
 license: MIT
 contact: solutions-engineering@lists.canonical.com
@@ -125,10 +125,6 @@ issues: https://github.com/canonical/charmed-openstack-exporter-snap/issues
 adopt-info: openstack-exporter
 confinement: strict
 grade: stable
-
-platforms:
-  amd64:
-  arm64:
 
 apps:
   openstack-exporter:
