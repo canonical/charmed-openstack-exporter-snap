@@ -4,7 +4,7 @@ import pytest
 
 
 @pytest.fixture(scope="session", autouse=True)
-def install_dcgm_snap():
+def install_charmed_openstack_exporter_snap():
     """Install the snap and enable openstack-exporter service for testing."""
     snap_build_name = "charmed-openstack-exporter_*.snap"
     config_dir_path = "/etc/openstack"
