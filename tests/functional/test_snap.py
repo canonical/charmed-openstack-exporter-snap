@@ -38,9 +38,8 @@ def _assert_endpoint_reachable(endpoint: str) -> None:
 def _assert_service_listening(bind: str, service: str) -> None:
     """Assert service is listening on a specific bind."""
     pid = subprocess.check_output(["sudo", "lsof", "-t", "-i", bind], text=True).strip()
-    assert service in subprocess.check_output(
-        ["cat", f"/proc/{pid}/cmdline"], text=True
-    ), f"{service} is not listening on {bind}"
+    with open(f"/proc/{pid}/cmdline", encoding="utf-8") as f:
+        assert service in f.read(), f"{service} is not listening on {bind}"
 
 
 @retry(wait=wait_fixed(2), stop=stop_after_delay(10))
