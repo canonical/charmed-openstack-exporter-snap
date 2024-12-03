@@ -1,5 +1,5 @@
 name: charmed-openstack-exporter
-base: core22
+base: core24
 summary: OpenStack Exporter for Prometheus
 license: MIT
 contact: solutions-engineering@lists.canonical.com
@@ -105,8 +105,8 @@ description: |
   **Cryptography**
   ---
 
-  A developer can use a helper script (`sync_upstream.sh`) to update the folders containing hooks and local scripts from upstream. 
-  The script uses the `git clone` command over **HTTPS** to fetch the latest files and update the snap folder content accordingly. 
+  A developer can use a helper script (`sync_upstream.sh`) to update the folders containing hooks and local scripts from upstream.
+  The script uses the `git clone` command over **HTTPS** to fetch the latest files and update the snap folder content accordingly.
   See the links at the bottom of the page for more details.
 
   **Links**
@@ -125,6 +125,10 @@ issues: https://github.com/canonical/charmed-openstack-exporter-snap/issues
 adopt-info: openstack-exporter
 confinement: strict
 grade: stable
+
+platforms:
+  amd64:
+  arm64:
 
 apps:
   openstack-exporter:

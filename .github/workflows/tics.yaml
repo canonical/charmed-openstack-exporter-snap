@@ -44,8 +44,8 @@ jobs:
         uses: tiobe/tics-github-action@v3
         with:
           mode: qserver
-          project: charmed-openstack-exporter-snap
+          project: ${project}
           viewerUrl: https://canonical.tiobe.com/tiobeweb/TICS/api/cfg?name=default
-          branchdir: ${{ github.workspace }}
-          ticsAuthToken: ${{ secrets.TICSAUTHTOKEN }}
+          branchdir: $${{ github.workspace }}
+          ticsAuthToken: $${{ secrets.TICSAUTHTOKEN }}
           installTics: true
