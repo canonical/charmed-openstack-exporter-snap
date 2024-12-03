@@ -1,0 +1,51 @@
+# This file is centrally managed as a template file in https://github.com/canonical/solutions-engineering-automation
+# To update the file:
+# - Edit it in the canonical/solutions-engineering-automation repository.
+# - Open a PR with the changes.
+# - When the PR merges, the soleng-terraform bot will open a PR to the target repositories with the changes.
+name: TICS
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          python -m pip install --upgrade pip
+          # tics action requires flake8 to be installed on the runner
+          # https://github.com/tiobe/tics-github-action/issues/410
+          python -m pip install flake8
+          # pin tox to the current major version to avoid
+          # workflows breaking all at once when a new major version is released.
+          python -m pip install 'tox<5'
+
+      # The snap is built already in the check workflow and available as an artifact,
+      # but we want this TICS workflow to be independent,
+      # so we can run the workflow periodically or on demand.
+      - name: Build the snap
+        id: build
+        uses: canonical/action-build@v1
+
+      - name: Test with tox and produce coverage report
+        run: tox -e tics
+
+      - name: Run TICS analysis
+        uses: tiobe/tics-github-action@v3
+        with:
+          mode: qserver
+          project: charmed-openstack-exporter-snap
+          viewerUrl: https://canonical.tiobe.com/tiobeweb/TICS/api/cfg?name=default
+          branchdir: ${{ github.workspace }}
+          ticsAuthToken: ${{ secrets.TICSAUTHTOKEN }}
+          installTics: true
