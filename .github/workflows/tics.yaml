@@ -1,3 +1,8 @@
+# This file is centrally managed as a template file in https://github.com/canonical/solutions-engineering-automation
+# To update the file:
+# - Edit it in the canonical/solutions-engineering-automation repository.
+# - Open a PR with the changes.
+# - When the PR merges, the soleng-terraform bot will open a PR to the target repositories with the changes.
 name: TICS
 
 on:
@@ -7,29 +12,10 @@ on:
       - main
 
 jobs:
-  build:
+  tics-analysis:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Verify snap builds successfully
-        id: build
-        uses: canonical/action-build@v1
-
-      - name: Upload the built snap
-        uses: actions/upload-artifact@v4
-        with:
-          name: snap_artifact
-          path: ${{ steps.build.outputs.snap }}
-
-  tics-report:
-    needs: build
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -37,17 +23,19 @@ jobs:
         run: |
           sudo apt update
           python -m pip install --upgrade pip
-          # tics action requires flake8 to be installed on the runner
+          # tics action requires flake8 and pylint to be installed on the runner
           # https://github.com/tiobe/tics-github-action/issues/410
-          python -m pip install flake8
+          python -m pip install flake8 pylint
           # pin tox to the current major version to avoid
           # workflows breaking all at once when a new major version is released.
           python -m pip install 'tox<5'
 
-      - name: Get the snap artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: snap_artifact
+      # The snap is built already in the check workflow and available as an artifact,
+      # but we want this TICS workflow to be independent,
+      # so we can run the workflow periodically or on demand.
+      - name: Build the snap
+        id: build
+        uses: canonical/action-build@v1
 
       - name: Test with tox and produce coverage report
         run: tox -e tics
