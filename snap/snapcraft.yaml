@@ -105,8 +105,8 @@ description: |
   **Cryptography**
   ---
 
-  A developer can use a helper script (`sync_upstream.sh`) to update the folders containing hooks and local scripts from upstream. 
-  The script uses the `git clone` command over **HTTPS** to fetch the latest files and update the snap folder content accordingly. 
+  A developer can use a helper script (`sync_upstream.sh`) to update the folders containing hooks and local scripts from upstream.
+  The script uses the `git clone` command over **HTTPS** to fetch the latest files and update the snap folder content accordingly.
   See the links at the bottom of the page for more details.
 
   **Links**
