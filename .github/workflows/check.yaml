@@ -189,6 +189,7 @@ jobs:
             # Check if there is actual data to report before generating XML with merged reports
             if coverage report > /dev/null 2>&1; then
               coverage xml -o tests/report/coverage.xml
+            fi
 
           fi
 
