@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
-    branches: [main]
+    branches: [main, fix-tics]
     paths-ignore:
       - "**.md"
       - "**.rst"
@@ -157,9 +157,6 @@ jobs:
 
   tics-analysis:
     runs-on: ubuntu-22.04
-    if: >
-      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
-      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
     needs: func
     steps:
       - uses: actions/checkout@v4
