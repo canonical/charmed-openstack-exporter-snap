@@ -150,6 +150,10 @@ parts:
     plugin: go
     source: https://github.com/openstack-exporter/openstack-exporter.git
     source-type: git
+    # Please see https://github.com/canonical/charmed-openstack-exporter-snap/issues/37
+    # Pin to a specific commit until upstream fixes collection of openstack_nova metrics
+    # v1.7.0-39-g20f5bdd revision
+    source-commit: 20f5bdd0e40a2ca5512471f86fdf2981f8caf350
     build-snaps:
       - go
     # override pull to read VERSION because working dir is root of source repo
