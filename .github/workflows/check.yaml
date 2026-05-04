@@ -91,7 +91,7 @@ jobs:
         fi
 
     - name: Upload Unit Test Coverage File
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         include-hidden-files: true
         if-no-files-found: ignore
@@ -119,7 +119,7 @@ jobs:
         run: echo "SYSTEM_ARCH=$(uname -m)" >> $GITHUB_ENV
 
       - name: Upload the built snap
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: snap_${{ env.SYSTEM_ARCH }}
           path: ${{ steps.build.outputs.snap }}
@@ -141,7 +141,7 @@ jobs:
         run: echo "SYSTEM_ARCH=$(uname -m)" >> $GITHUB_ENV
 
       - name: Download snap file artifact
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: snap_${{ env.SYSTEM_ARCH }}
 
@@ -176,7 +176,7 @@ jobs:
           fi
 
       - name: Upload Functional Test Coverage Artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           include-hidden-files: true
           if-no-files-found: ignore
@@ -194,26 +194,31 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install coverage tools
-        run: |
-          pip install coverage[toml]
-
       # Install everything from all requirements.txt files otherwise TICS errors.
       - name: Install all snap dependencies
         env:
           # to ensure that zaza installs correctly
           TEST_JUJU3: "1"
         run: |
+          # run in a virtualenv to ensure dependencies will not conflict with the system python packages
+          sudo apt update
+          sudo apt install python3-venv -y
+          python3 -m venv .venv
+          .venv/bin/python -m pip install --upgrade pip
+          .venv/bin/python -m pip install coverage[toml]
+
           for f in $(find -name '*requirements.txt'); do
               echo "${f}"
-              pip3 install --requirement "${f}"
+              .venv/bin/python -m pip install --requirement "${f}"
           done
+
+          echo "$GITHUB_WORKSPACE/.venv/bin" >> $GITHUB_PATH
 
       - name: Determine system architecture
         run: echo "SYSTEM_ARCH=$(uname -m)" >> $GITHUB_ENV
 
       - name: Download Coverage Files
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           pattern: coverage-*-${{ env.SYSTEM_ARCH }}
           merge-multiple: true
