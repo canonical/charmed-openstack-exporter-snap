@@ -1,5 +1,5 @@
 name: charmed-openstack-exporter
-base: core24
+base: core26
 summary: OpenStack Exporter for Prometheus
 license: MIT
 contact: solutions-engineering@lists.canonical.com
@@ -124,7 +124,8 @@ source-code: https://github.com/canonical/charmed-openstack-exporter-snap
 issues: https://github.com/canonical/charmed-openstack-exporter-snap/issues
 adopt-info: openstack-exporter
 confinement: strict
-grade: stable
+build-base: devel
+grade: devel
 
 platforms:
   amd64:
@@ -150,10 +151,7 @@ parts:
     plugin: go
     source: https://github.com/openstack-exporter/openstack-exporter.git
     source-type: git
-    # Please see https://github.com/canonical/charmed-openstack-exporter-snap/issues/37
-    # Pin to a specific commit until upstream fixes collection of openstack_nova metrics
-    # v1.7.0-39-g20f5bdd revision
-    source-commit: 20f5bdd0e40a2ca5512471f86fdf2981f8caf350
+    source-tag: v1.8.0-alpha
     build-snaps:
       - go
     # override pull to read VERSION because working dir is root of source repo
