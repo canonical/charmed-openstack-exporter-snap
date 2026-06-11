@@ -129,6 +129,7 @@ grade: stable
 platforms:
   amd64:
   arm64:
+  s390x:
 
 apps:
   openstack-exporter:
